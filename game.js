@@ -3,17 +3,19 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
 // Oyun alanının boyutlarını ayarlıyoruz.
-canvas.width = 800;
-canvas.height = 600;
+// Mobil cihazlarda daha iyi görünmesi için ekran boyutuna göre ayar yapıyoruz.
+canvas.width = Math.min(window.innerWidth, 800);
+canvas.height = Math.min(window.innerHeight * 0.7, 600);
+
 
 // OYUNCU AYARLARI
 const player = {
     x: canvas.width / 2 - 25, // Başlangıç X konumu (ortada)
     y: canvas.height / 2 - 25, // Başlangıç Y konumu (ortada)
-    width: 50,
-    height: 50,
+    width: 35, // Mobil için biraz küçülttük
+    height: 35,
     color: 'cyan',
-    speed: 5,
+    speed: 4, // Mobil için hızı biraz düşürdük
     dx: 0, // X eksenindeki hareket
     dy: 0, // Y eksenindeki hareket
     lastDirection: 'right' // Ateş etmek için son yönü saklar
@@ -23,7 +25,7 @@ const player = {
 let bullets = [];
 const bulletSpeed = 7;
 
-// KLAVYE KONTROLÜ
+// KLAVYE & BUTON KONTROLÜ
 const keys = {
     ArrowUp: false,
     ArrowDown: false,
@@ -31,31 +33,68 @@ const keys = {
     ArrowRight: false
 };
 
-// Klavye tuşuna basıldığında
+// --- KLAVYE KONTROLLERİ ---
 document.addEventListener('keydown', (e) => {
     if (e.key in keys) {
         keys[e.key] = true;
     }
-    // Boşluk tuşuna basıldığında ateş et
     if (e.code === 'Space') {
         shoot();
     }
 });
 
-// Klavye tuşu bırakıldığında
 document.addEventListener('keyup', (e) => {
     if (e.key in keys) {
         keys[e.key] = false;
     }
 });
 
-// Oyuncu hareketini güncelleyen fonksiyon
+
+// --- DOKUNMATİK BUTON KONTROLLERİ ---
+const upBtn = document.getElementById('upBtn');
+const downBtn = document.getElementById('downBtn');
+const leftBtn = document.getElementById('leftBtn');
+const rightBtn = document.getElementById('rightBtn');
+const shootBtn = document.getElementById('shootBtn');
+
+// Butona dokunulduğunda (touchstart) veya fare ile basıldığında (mousedown)
+function handleButtonPress(e) {
+    e.preventDefault(); // Sayfanın kaymasını veya zoom yapmasını engelle
+    switch (e.target.id) {
+        case 'upBtn': keys.ArrowUp = true; break;
+        case 'downBtn': keys.ArrowDown = true; break;
+        case 'leftBtn': keys.ArrowLeft = true; break;
+        case 'rightBtn': keys.ArrowRight = true; break;
+        case 'shootBtn': shoot(); break;
+    }
+}
+
+// Buton bırakıldığında (touchend) veya fare kaldırıldığında (mouseup)
+function handleButtonRelease(e) {
+    e.preventDefault();
+    // Dokunma olayları için hangi butonun bırakıldığını anlamak biraz daha karmaşık.
+    // Bu yüzden tüm hareket tuşlarını false yapıyoruz.
+    keys.ArrowUp = false;
+    keys.ArrowDown = false;
+    keys.ArrowLeft = false;
+    keys.ArrowRight = false;
+}
+
+// Butonlara olay dinleyicilerini ekle
+const controlButtons = document.querySelectorAll('.control-btn');
+controlButtons.forEach(button => {
+    button.addEventListener('mousedown', handleButtonPress);
+    button.addEventListener('mouseup', handleButtonRelease);
+    button.addEventListener('touchstart', handleButtonPress, { passive: false });
+    button.addEventListener('touchend', handleButtonRelease);
+});
+
+
+// Oyuncu hareketini güncelleyen fonksiyon (Değişiklik yok)
 function movePlayer() {
-    // Önce hareketi sıfırla
     player.dx = 0;
     player.dy = 0;
 
-    // Basılan tuşlara göre hareketi ve son yönü ayarla
     if (keys.ArrowUp) {
         player.dy = -player.speed;
         player.lastDirection = 'up';
@@ -73,22 +112,21 @@ function movePlayer() {
         player.lastDirection = 'right';
     }
 
-    // Yeni konumu hesapla
     player.x += player.dx;
     player.y += player.dy;
     
-    // Sınır kontrolü (oyuncunun ekran dışına çıkmasını engelle)
+    // Sınır kontrolü
     if (player.x < 0) player.x = 0;
     if (player.x + player.width > canvas.width) player.x = canvas.width - player.width;
     if (player.y < 0) player.y = 0;
     if (player.y + player.height > canvas.height) player.y = canvas.height - player.height;
 }
 
-// Ateş etme fonksiyonu
+// Ateş etme fonksiyonu (Değişiklik yok)
 function shoot() {
     const bullet = {
-        x: player.x + player.width / 2 - 5, // Merminin başlangıç X'i (oyuncunun ortası)
-        y: player.y + player.height / 2 - 5, // Merminin başlangıç Y'si
+        x: player.x + player.width / 2 - 5,
+        y: player.y + player.height / 2 - 5,
         width: 10,
         height: 10,
         color: 'red',
@@ -96,43 +134,31 @@ function shoot() {
         dy: 0
     };
 
-    // Merminin gideceği yönü oyuncunun son baktığı yöne göre ayarla
     switch (player.lastDirection) {
-        case 'up':
-            bullet.dy = -bulletSpeed;
-            break;
-        case 'down':
-            bullet.dy = bulletSpeed;
-            break;
-        case 'left':
-            bullet.dx = -bulletSpeed;
-            break;
-        case 'right':
-            bullet.dx = bulletSpeed;
-            break;
+        case 'up': bullet.dy = -bulletSpeed; break;
+        case 'down': bullet.dy = bulletSpeed; break;
+        case 'left': bullet.dx = -bulletSpeed; break;
+        case 'right': bullet.dx = bulletSpeed; break;
     }
     
-    bullets.push(bullet); // Mermiyi mermiler dizisine ekle
+    bullets.push(bullet);
 }
 
-// Mermileri hareket ettirme ve çizme
+// Mermileri yönetme (Değişiklik yok)
 function handleBullets() {
     for (let i = bullets.length - 1; i >= 0; i--) {
         let bullet = bullets[i];
         bullet.x += bullet.dx;
         bullet.y += bullet.dy;
 
-        // Mermiyi çiz
         ctx.fillStyle = bullet.color;
         ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
         
-        // Mermi ekran dışına çıkarsa diziden sil
         if (bullet.x < 0 || bullet.x > canvas.width || bullet.y < 0 || bullet.y > canvas.height) {
             bullets.splice(i, 1);
         }
     }
 }
-
 
 // Çizim Fonksiyonları
 function drawPlayer() {
@@ -142,19 +168,10 @@ function drawPlayer() {
 
 // Ana Oyun Döngüsü
 function update() {
-    // Ekranı her karede temizle
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Oyuncuyu çiz
     drawPlayer();
-    
-    // Oyuncuyu hareket ettir
     movePlayer();
-    
-    // Mermileri yönet
     handleBullets();
-
-    // Bu fonksiyonu sürekli olarak tekrar çağırarak animasyon oluştur
     requestAnimationFrame(update);
 }
 
