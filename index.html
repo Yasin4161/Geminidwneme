@@ -3,48 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video İndirici Arayüzü</title>
+    <title>TubeFlow - Profesyonel Video İndirici</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <h1>YouTube Video İndirici</h1>
+    <header class="main-header">
+        <nav>
+            <div class="logo">TubeFlow</div>
+            <ul class="nav-links">
+                <li><a href="#features">Özellikler</a></li>
+                <li><a href="#how-it-works">Nasıl Çalışır?</a></li>
+                <li><a href="#faq">SSS</a></li>
+            </ul>
+        </nav>
     </header>
 
     <main>
-        <section>
-            <h2>Videoyu İndir</h2>
-            <p>İndirmek istediğiniz videonun YouTube linkini aşağıdaki kutuya yapıştırın.</p>
-            
-            <form>
-                <label for="video-url">Video URL:</label>
-                <input 
-                    type="url" 
-                    id="video-url" 
-                    name="video-url" 
-                    placeholder="https://www.youtube.com/watch?v=..."
-                    size="50"
-                    required
-                >
-                <button type="submit">İndir</button>
-            </form>
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="animate-on-load">Videoları Işık Hızında İndirin</h1>
+                <p class="animate-on-load delay-1">Yüksek kalite, sınırsız ve tamamen ücretsiz.</p>
+                <div class="downloader-form animate-on-load delay-2">
+                    <input type="url" placeholder="YouTube video linkini buraya yapıştırın...">
+                    <button>İndir</button>
+                </div>
+            </div>
+            <div class="hero-bg"></div>
         </section>
 
-        <section>
-            <h2>İndirme Sonuçları</h2>
-            <p>Video bilgileri ve indirme seçenekleri burada görünecektir.</p>
-            <div>
-                <h3>Örnek Video Başlığı</h3>
-                <p><strong>Kalite:</strong> 720p - <strong>Format:</strong> MP4 - <a href="#">Şimdi İndir</a></p>
-                <p><strong>Kalite:</strong> 1080p - <strong>Format:</strong> MP4 - <a href="#">Şimdi İndir</a></p>
-                <p><strong>Format:</strong> Sadece Ses (MP3) - <a href="#">Şimdi İndir</a></p>
+        <section id="features" class="features">
+            <div class="feature-card animate-on-scroll">
+                <img src="https://img.icons8.com/fluency/96/000000/4k.png" alt="4K İkonu"/>
+                <h3>Yüksek Çözünürlük</h3>
+                <p>Videolarınızı 4K'ya varan kalitelerde indirin.</p>
+            </div>
+            <div class="feature-card animate-on-scroll">
+                <img src="https://img.icons8.com/fluency/96/000000/flash-on.png" alt="Hız İkonu"/>
+                <h3>Süper Hızlı</h3>
+                <p>Optimize edilmiş sunucularla bekleme derdine son.</p>
+            </div>
+            <div class="feature-card animate-on-scroll">
+                <img src="https://img.icons8.com/fluency/96/000000/verified-account.png" alt="Güvenlik İkonu"/>
+                <h3>Güvenli & Gizli</h3>
+                <p>Verileriniz kaydedilmez, indirmeleriniz tamamen anonimdir.</p>
+            </div>
+        </section>
+
+        <section id="how-it-works" class="how-it-works">
+            <h2 class="section-title animate-on-scroll">Sadece 3 Basit Adım</h2>
+            <div class="steps-container">
+                <div class="step animate-on-scroll">
+                    <div class="step-number">1</div>
+                    <h3>Linki Yapıştır</h3>
+                    <p>İndirmek istediğiniz videonun linkini kopyalayın.</p>
+                </div>
+                <div class="step animate-on-scroll">
+                    <div class="step-number">2</div>
+                    <h3>Formatı Seç</h3>
+                    <p>MP4, WEBM veya sadece ses (MP3) formatını seçin.</p>
+                </div>
+                <div class="step animate-on-scroll">
+                    <div class="step-number">3</div>
+                    <h3>İndir</h3>
+                    <p>Butona tıklayın ve videonuzun keyfini çıkarın.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="faq" class="faq">
+            <h2 class="section-title animate-on-scroll">Sıkça Sorulan Sorular</h2>
+            <div class="faq-item animate-on-scroll">
+                <details>
+                    <summary>Bu hizmet ücretli mi?</summary>
+                    <p>Hayır, TubeFlow tamamen ücretsizdir ve her zaman öyle kalacaktır.</p>
+                </details>
+            </div>
+            <div class="faq-item animate-on-scroll">
+                <details>
+                    <summary>Video indirmek yasal mı?</summary>
+                    <p>Telif hakkı size ait olan veya kamuya açık videoları indirmek genellikle yasaldır. Başkalarının telifli içeriklerini izinsiz indirmek yasa dışı olabilir. Lütfen yerel yasalarınıza uyun.</p>
+                </details>
             </div>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2025 Video İndirici. Tüm hakları saklıdır.</p>
+        <p>&copy; 2025 TubeFlow. Tüm hakları saklıdır.</p>
     </footer>
 
+    <script src="script.js"></script>
 </body>
 </html>
