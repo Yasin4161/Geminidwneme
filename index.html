@@ -2,13 +2,26 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İkonik HTML Oyunu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Mobil HTML Oyunu</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Yön Tuşları ile Hareket Et, Boşluk ile Ateş Et!</h1>
     <canvas id="gameCanvas"></canvas>
+    
+    <div id="controls">
+        <div class="d-pad">
+            <button id="upBtn" class="control-btn">▲</button>
+            <div class="middle-row">
+                <button id="leftBtn" class="control-btn">◄</button>
+                <button id="rightBtn" class="control-btn">►</button>
+            </div>
+            <button id="downBtn" class="control-btn">▼</button>
+        </div>
+        <div class="action-btn">
+            <button id="shootBtn" class="control-btn">ATEŞ</button>
+        </div>
+    </div>
     
     <script src="game.js"></script>
 </body>
