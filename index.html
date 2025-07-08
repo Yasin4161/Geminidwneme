@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video İndirici Arayüzü</title>
+</head>
+<body>
+
+    <header>
+        <h1>YouTube Video İndirici</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>Videoyu İndir</h2>
+            <p>İndirmek istediğiniz videonun YouTube linkini aşağıdaki kutuya yapıştırın.</p>
+            
+            <form>
+                <label for="video-url">Video URL:</label>
+                <input 
+                    type="url" 
+                    id="video-url" 
+                    name="video-url" 
+                    placeholder="https://www.youtube.com/watch?v=..."
+                    size="50"
+                    required
+                >
+                <button type="submit">İndir</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>İndirme Sonuçları</h2>
+            <p>Video bilgileri ve indirme seçenekleri burada görünecektir.</p>
+            <div>
+                <h3>Örnek Video Başlığı</h3>
+                <p><strong>Kalite:</strong> 720p - <strong>Format:</strong> MP4 - <a href="#">Şimdi İndir</a></p>
+                <p><strong>Kalite:</strong> 1080p - <strong>Format:</strong> MP4 - <a href="#">Şimdi İndir</a></p>
+                <p><strong>Format:</strong> Sadece Ses (MP3) - <a href="#">Şimdi İndir</a></p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Video İndirici. Tüm hakları saklıdır.</p>
+    </footer>
+
+</body>
+</html>
